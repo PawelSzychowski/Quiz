@@ -11,26 +11,26 @@ public class CreatQuestions {
     public static void addQestion() {
         File plik = new File("pytania/Własne_pytania");
         Scanner scanner = new Scanner(System.in);
-        String komendy;
+        String command;
 
         try (
                 PrintWriter printWriter = new PrintWriter(new FileWriter(plik, true))) {
                 do {
                     System.out.println("Podaj treść pytania");
-                    String pytanie = scanner.nextLine();
-                    printWriter.println(pytanie);
+                    String questionContent = scanner.nextLine();
+                    printWriter.println(questionContent);
                     System.out.println("Podaj ilość odpowidzi");
-                    String liczbaOdpowiedzi = scanner.nextLine();
-                    printWriter.println(liczbaOdpowiedzi);
+                    String numberOfAnswer = scanner.nextLine();
+                    printWriter.println(numberOfAnswer);
                     System.out.println("Podaj swoje odpowiedzi, pamiętaj że pierwsza odpowiedź jest oznaczona jako prawidłowa.");
-                    for (int i = 0; i <Integer.parseInt(liczbaOdpowiedzi) ; i++) {
-                        String odpowiedz = scanner.nextLine();
-                        printWriter.println(odpowiedz);
+                    for (int i = 0; i <Integer.parseInt(numberOfAnswer) ; i++) {
+                        String answer = scanner.nextLine();
+                        printWriter.println(answer);
                     }
                     System.out.println("aby zakonczyć wpisz koniec jeśli chcesz dodawać dalej pytania wciśnij enter");
-                    komendy = scanner.nextLine();
+                    command = scanner.nextLine();
                     printWriter.close();
-                }while(!komendy.equalsIgnoreCase("koniec"));
+                }while(!command.equalsIgnoreCase("koniec"));
         } catch (
                 IOException ioe) {
             System.out.println("error " + ioe.getMessage());

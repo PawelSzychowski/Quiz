@@ -20,10 +20,10 @@ public class QuizLogic {
         Map<String, List<Questions>> mapOfQestions = new HashMap<>();
         List<Questions> allQestions = new ArrayList<>();
         File file = new File("pytania");
-        File[] tytulyPytan = file.listFiles();
-        for (int i = 0; i < tytulyPytan.length; i++) {
-            List<Questions> questions = ReadQestions.qestionList(tytulyPytan[i]);
-            mapOfQestions.put(tytulyPytan[i].getName(), questions);
+        File[] titleOfQestions = file.listFiles();
+        for (int i = 0; i < titleOfQestions.length; i++) {
+            List<Questions> questions = ReadQestions.qestionList(titleOfQestions[i]);
+            mapOfQestions.put(titleOfQestions[i].getName(), questions);
             allQestions.addAll(questions);
         }
         mapOfQestions.put("wszystkie", allQestions);
@@ -42,63 +42,63 @@ public class QuizLogic {
         for (int i = 0; i < listOfCategory.size(); i++) {
             System.out.println((i + 1) + " -> " + listOfCategory.get(i));
         }
-        int numerKategorii;
-        int numerPytan;
+        int categoryNumber;
+        int howManyQestion;
         do {
             System.out.println("Podaj Kategorie");
             category = scanner.nextLine();
 
             try {
-                numerKategorii = Integer.parseInt(category);
+                categoryNumber = Integer.parseInt(category);
             } catch (NumberFormatException e) {
-                numerKategorii = -1;
+                categoryNumber = -1;
             }
-        } while (numerKategorii > listOfCategory.size() || numerKategorii < 0);
+        } while (categoryNumber > listOfCategory.size() || categoryNumber < 0);
         do {
             System.out.println("Podaj liczbe pytań");
             numberOfQestions = scanner.nextLine();
             try {
-                numerPytan = Integer.parseInt(numberOfQestions);
+                howManyQestion = Integer.parseInt(numberOfQestions);
             } catch (NumberFormatException e) {
-                numerPytan = -1;
+                howManyQestion = -1;
             }
-        } while (numerPytan <= 0);
+        } while (howManyQestion <= 0);
         List<Questions> qestionsFromCategory = mojePytania.get(listOfCategory.get(Integer.parseInt(category) - 1));
         List<Questions> questions = new ArrayList<>(drawQestions(qestionsFromCategory, Integer.parseInt(numberOfQestions)));
         for (int i = 0; i < questions.size(); i++) {
 
-            List<String> shuffleQuestions = questions.get(i).getAnwser();
-            String correctAnwser = questions.get(i).getAnwser().get(0);
+            List<String> shuffleQuestions = questions.get(i).getAnswer();
+            String correctAnswer = questions.get(i).getAnswer().get(0);
             Collections.shuffle(shuffleQuestions);
             System.out.println(questions.get(i).getQuestion());
             char chose = 65;
             HashSet<Character> legalneOdpowiedzi = new HashSet<>();
-            for (int j = 0; j < questions.get(i).getAnwser().size(); j++) {
+            for (int j = 0; j < questions.get(i).getAnswer().size(); j++) {
                 System.out.println(chose + " -> " + shuffleQuestions.get(j));
                 legalneOdpowiedzi.add(chose);
                 chose++;
             }
             System.out.println();
-            String odpowiedz;
+            String myAnswer;
             Character odp;
             do {
                 System.out.println("Podaj odpowiedź:");
-                 odpowiedz = scanner.nextLine();
+                 myAnswer = scanner.nextLine();
                  try{
-                     odp = odpowiedz.charAt(0);
+                     odp = myAnswer.charAt(0);
                  }catch (StringIndexOutOfBoundsException e){
                      odp = 'x';
                  }
 
             }while (!legalneOdpowiedzi.contains(odp));
-            char odpowiedzLitera = odpowiedz.charAt(0);
-            int indeksOdpowiedzi = odpowiedzLitera - 65;
+            char goodLetter = myAnswer.charAt(0);
+            int indexOfAnswer = goodLetter - 65;
             questionCounter++;
-            if (correctAnwser.equalsIgnoreCase(shuffleQuestions.get(indeksOdpowiedzi))) {
+            if (correctAnswer.equalsIgnoreCase(shuffleQuestions.get(indexOfAnswer))) {
                 counter++;
                 System.out.println("Prawidłowa Odpowiedź, liczba punktów " + counter);
             } else {
-                System.out.println("Zła odpowiedź, liczba punktów " + counter + " prawidłowa odpowiedź to: " + correctAnwser);
+                System.out.println("Zła odpowiedź, liczba punktów " + counter + " prawidłowa odpowiedź to: " + correctAnswer);
                 System.out.println();
             }
         }

@@ -8,7 +8,7 @@ import java.util.*;
 public class Questions {
 
     private String question;
-    private List<String> anwser;
+    private List<String> answer;
 
 
 }
